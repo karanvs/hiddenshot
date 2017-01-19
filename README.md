@@ -42,7 +42,9 @@ HiddenShot.getInstance().saveShot(MainActivity.this, shot, "view");
 HiddenShot.getInstance().buildShotAndShare(MainActivity.this);
 
 ```
+## Under Develoment
 
+* Continous shots.
 
 ### License
 
