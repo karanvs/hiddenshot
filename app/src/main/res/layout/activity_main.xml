@@ -25,4 +25,19 @@
       android:text="Take and share"
       />
 
+  <Button
+      android:id="@+id/takeContinousShot"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Take continous shot"
+      />
+
+  <Button
+      android:id="@+id/stopContinousShot"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Stop continous shot"
+      android:enabled="false"
+      />
+
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 import com.veer.hiddenshot.HiddenShot;
 
@@ -21,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         final Bitmap shot = HiddenShot.getInstance().buildShot(MainActivity.this);
 
         HiddenShot.getInstance().saveShot(MainActivity.this, shot, "view");
-
         Toast.makeText(MainActivity.this, "taken", Toast.LENGTH_SHORT).show();
       }
     });
@@ -30,9 +30,32 @@ public class MainActivity extends AppCompatActivity {
       @Override public void onClick(View view) {
 
         HiddenShot.getInstance().buildShotAndShare(MainActivity.this);
-
         Toast.makeText(MainActivity.this, "taken", Toast.LENGTH_SHORT).show();
       }
     });
+
+    final Button continousShot=(Button)findViewById(R.id.takeContinousShot);
+    final Button stopContinousShot=(Button)findViewById(R.id.stopContinousShot);
+    continousShot.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        continousShot.setEnabled(false);
+        stopContinousShot.setEnabled(true);
+        HiddenShot.getInstance().buildContinousShot(MainActivity.this, 500);
+      }
+    });
+    stopContinousShot.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        continousShot.setEnabled(true);
+        stopContinousShot.setEnabled(false);
+        HiddenShot.getInstance().stopContinousShot();
+      }
+    });
+
+
+  }
+
+  @Override protected void onDestroy() {
+    HiddenShot.getInstance().stopContinousShot();
+    super.onDestroy();
   }
 }

@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -33,6 +34,12 @@ public class HiddenShot {
   public static HiddenShot getInstance() {
     return ourInstance;
   }
+
+  private boolean isActive = false;
+
+  private Handler mhandler;
+
+  private TakeShot takeShot;
 
   private HiddenShot() {
   }
@@ -81,20 +88,46 @@ public class HiddenShot {
       }
     }
     // Create a media file name
-    String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+    String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
     File mediaFile;
     String mImageName = filename + timeStamp + ".jpg";
     mediaFile = new File(mediaStorageDirectory.getPath() + File.separator + mImageName);
     return mediaFile;
   }
 
-  public void buildShotAfter(Activity activity,int milliseconds) {
-    ActivityManager am = (ActivityManager) activity.getSystemService(ACTIVITY_SERVICE);
-    List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-    Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
-    ComponentName componentInfo = taskInfo.get(0).topActivity;
-    componentInfo.getPackageName();
+  public void buildContinousShot(Activity activity, long millisecond) {
+    isActive=true;
+    mhandler = new Handler();
+    takeShot=new TakeShot(activity,millisecond);
+    mhandler.postDelayed(takeShot, millisecond);
+  }
 
+  class TakeShot implements Runnable {
+    private final Activity activity;
+    private long millisec;
+
+    TakeShot(Activity activity,long millisec) {
+      this.activity = activity;
+      this.millisec=millisec;
+    }
+
+    @Override public void run() {
+      if (isActive) {
+        Bitmap bitmap = buildShot(activity);
+        saveShot(activity, bitmap, "shot");
+        mhandler.postDelayed(takeShot, millisec);
+      }
+    }
+  }
+
+
+  public void stopContinousShot()
+  {
+   if(isActive)
+   {
+     isActive=false;
+     mhandler.removeCallbacks(takeShot);
+   }
   }
 
   public void buildShotAndShare(Activity activity) {
