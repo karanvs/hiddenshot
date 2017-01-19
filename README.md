@@ -18,7 +18,7 @@ allprojects {
 *  Add dependency for library
 ```
 dependencies {
-	        compile 'com.github.karanvs:hiddenshot:v1.0'
+	        compile 'com.github.karanvs:hiddenshot:v1.1'
 	}
 ```
 
@@ -42,9 +42,20 @@ HiddenShot.getInstance().saveShot(MainActivity.this, shot, "view");
 HiddenShot.getInstance().buildShotAndShare(MainActivity.this);
 
 ```
-## Under Develoment
 
-* Continous shots.
+* Take continous shots,
+
+```
+HiddenShot.getInstance().buildContinousShot(MainActivity.this, timeInterval); //specify your value in timeinterval 
+
+Stop continous shot in onDestroy()
+
+@Override protected void onDestroy() {
+    HiddenShot.getInstance().stopContinousShot(); //this can be called manually to stop shots at any time
+    super.onDestroy();
+  }
+  
+```
 
 ### License
 
