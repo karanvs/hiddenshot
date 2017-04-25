@@ -154,4 +154,30 @@ public class HiddenShot {
       Toast.makeText(activity, "There is no app that can handle sharing", Toast.LENGTH_LONG).show();
     }
   }
+
+  public void buildShotAndShare(Activity activity,String shareMsg) {
+    Bitmap bitmap = buildShot(activity);
+    Uri uri = null;
+    try {
+      uri = saveShot(activity, bitmap, "screenshot");
+    } catch (NullPointerException e) {
+      Log.e("error", "null uri for file");
+      return;
+    }
+    shareShot("Choose an app", activity, uri,shareMsg);
+  }
+
+  private void shareShot(String s, Activity activity, Uri uri,String message) {
+    Intent shareIntent = new Intent();
+    shareIntent.setAction(Intent.ACTION_SEND);
+    shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+    shareIntent.putExtra(Intent.EXTRA_TEXT,message);
+    shareIntent.setType("image/*");
+    try {
+      activity.startActivity(Intent.createChooser(shareIntent, "Choose an app"));
+    } catch (android.content.ActivityNotFoundException ex) {
+
+      Toast.makeText(activity, "There is no app that can handle sharing", Toast.LENGTH_LONG).show();
+    }
+  }
 }
