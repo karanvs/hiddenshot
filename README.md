@@ -1,6 +1,8 @@
 # hiddenshot
-hiddenshot is a simple library to take a screenshot programmtically on demand. 
-Screenshot is saved in the picture folder on the device. You may also share a screenshot programmatically. 
+* hiddenshot is a simple library to take a screenshot programmatically on demand. 
+* Screenshot is saved in the picture folder on the device. 
+* Share a screenshot
+* Take continous screenshots periodically.
 
 
 ## Getting Started
