@@ -1,7 +1,7 @@
 # hiddenshot
 * hiddenshot is a simple library to take a screenshot programmatically on demand. 
 * Screenshot is saved in the picture folder on the device. 
-* Share a screenshot
+* Share a screenshot as image or image with text.
 * Take continous screenshots periodically.
 
 
@@ -20,11 +20,19 @@ allprojects {
 *  Add dependency for library
 ```
 dependencies {
-	        compile 'com.github.karanvs:hiddenshot:v1.1'
+	        compile 'com.github.karanvs:hiddenshot:v1.2'
 	}
 ```
 
 ## Usage
+
+* Permissions, needed to save and read the screenshot from the disc.
+
+```
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+ <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+```
+
 
 * Get the Screenshot as, 
 
@@ -42,6 +50,10 @@ HiddenShot.getInstance().saveShot(MainActivity.this, shot, "view");
 
 ```
 HiddenShot.getInstance().buildShotAndShare(MainActivity.this);
+
+                      OR
+		      
+HiddenShot.getInstance().buildShotAndShare(MainActivity.this,"your share message");		      
 
 ```
 
