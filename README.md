@@ -4,6 +4,11 @@
 * Share a screenshot as image or image with text.
 * Take continous screenshots periodically.
 
+## Apps using hiddenshot,
+
+* NewsF
+
+https://play.google.com/store/apps/details?id=com.veer.newsblast
 
 ## Getting Started
 
